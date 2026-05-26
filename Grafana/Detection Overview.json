@@ -1,0 +1,281 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "description": " a pie chart to show the distribution of anomalies across different zones (z1 to z5).",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "values": []
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "Zone 1",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "query": "SELECT SUM(\"prediction\") FROM \"abnormal_data_kmeans\" \nWHERE (\"z1_AC2(kW)\" > 0 OR \"z1_AC3(kW)\" > 0 OR \"z1_Plug(kW)\" > 0) \nGROUP BY \"zone\"\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 2",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT SUM(\"prediction\") FROM \"abnormal_data_kmeans\" \nWHERE (\"z2_AC1(kW)\" > 0 OR \"z2_Light(kW)\" > 0 OR \"z2_Plug(kW)\" > 0) \nGROUP BY \"zone\"\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 3 ",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT SUM(\"prediction\") FROM \"abnormal_data_kmeans\" \nWHERE (\"z3_Light(kW)\" > 0 OR \"z3_Plug(kW)\" > 0) \nGROUP BY \"zone\"\n",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 4",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT SUM(\"prediction\") FROM \"abnormal_data_kmeans\" \nWHERE (\"z4_AC1(kW)\" > 0 OR \"z4_Light(kW)\" > 0 OR \"z4_Plug(kW)\" > 0) \nGROUP BY \"zone\"\n",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 5",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT Sum(\"prediction\") FROM \"abnormal_data_kmeans\" \nWHERE (\"z5_AC1(kW)\" > 0 OR \"z5_Light(kW)\" > 0 OR \"z5_Plug(kW)\" > 0) \nGROUP BY \"zone\"\n",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Abnormal by Zone",
+      "type": "piechart"
+    },
+    {
+      "description": "Plot a time series of prediction (1 if anomaly, 0 if normal) over time.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "10m"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "0"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "anomaly_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(\"prediction\") FROM \"abnormal_data_kmeans\" WHERE \"prediction\" = 1\nAND $timeFilter GROUP BY time(10m) fill(0)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "prediction"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "bucket",
+              "operator": "=",
+              "value": "iber/autogen"
+            }
+          ]
+        }
+      ],
+      "title": "Abnormal Occurrence",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 35,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Detection Overview",
+  "uid": "kAqPFg7Nk",
+  "version": 11,
+  "weekStart": ""
+}

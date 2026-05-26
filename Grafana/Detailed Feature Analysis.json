@@ -1,0 +1,262 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "description": "a scatter plot comparing lux levels (z1_S1(lux), etc.) to energy consumption by lighting in each zone.",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "8.4.3",
+      "targets": [
+        {
+          "alias": "Zone 1 kW/LUX",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "query": "SELECT MEAN(\"z1_Plug(kW)\")/MEAN(\"z1_S1(lux)\") \nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 4 kW/Lux",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z4_Light(kW)\") /MEAN(\"z4_S1(lux)\") \nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Lux Level vs. Light Energy Consumption",
+      "type": "gauge"
+    },
+    {
+      "description": "Bar guage for z1_S1(RH%), z2_S1(RH%), etc., against AC energy consumption for each zone.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "displayMode": "lcd",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "8.4.3",
+      "targets": [
+        {
+          "alias": "Zone 1 Consumption",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "query": "SELECT MEAN(\"z1_AC2(kW)\") AS \"Zone 1 AC2 Consumption\"\n\nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 1 Humidity",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z1_S1(RH%)\")  \n\nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "H",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 2 Consumption",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z2_AC1(kW)\") AS \"Consumption\"\n\nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 2 Humidity",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n       MEAN(\"z2_S1(RH%)\") AS \"Humidity (RH%)\"\nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 4 Consumption",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z4_AC1(kW)\") AS \"Zone 4 AC1 Consumption\"\nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 4 Humidity",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT\n       MEAN(\"z4_S1(RH%)\") AS \"Zone 4 Humidity (RH%)\"\nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 5 Consumption",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z5_AC1(kW)\") AS \"Zone 5 AC1 Consumption\"\nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "G",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 5 Humidity",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n       MEAN(\"z5_S1(RH%)\") AS \"Zone 5 Humidity (RH%)\"\nFROM \"abnormal_data_isolation_forest\"\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Energy Consumption vs. Humidity (RH%)",
+      "type": "bargauge"
+    }
+  ],
+  "schemaVersion": 35,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Detailed Feature Analysis",
+  "uid": "DK66pg7Hk",
+  "version": 14,
+  "weekStart": ""
+}

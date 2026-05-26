@@ -1,0 +1,314 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "description": "a bar chart to display the average consumption of different features (e.g., AC, Light, Plug) for anomalous vs. non-anomalous cases.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "alias": "Abnormal Zone 1 ",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "query": "SELECT MEAN(\"z1_AC2(kW)\") AS \"Zone 1 AC2\"\n\nFROM \"abnormal_data_gmm\"\nWHERE \"prediction\" = 2\nGROUP BY time(10h)\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Abnormal Zone 2",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n       MEAN(\"z2_AC1(kW)\") AS \"Zone 2 AC1\"\nFROM \"abnormal_data_gmm\"\nWHERE \"prediction\" = 2\nGROUP BY time(10h)\n",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Abnormal Zone 4",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n       MEAN(\"z4_AC1(kW)\") AS \"Zone 4 AC1\"\n       FROM \"abnormal_data_gmm\"\nWHERE \"prediction\" = 2\nGROUP BY time(10h)\n",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Abnormal Zone 5",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n       MEAN(\"z5_AC1(kW)\") AS \"Zone 5 AC1\"\nFROM \"abnormal_data_gmm\"\nWHERE \"prediction\" = 2\nGROUP BY time(10h)\n",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Normal Zone 1",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z1_AC2(kW)\") AS \"Zone 1 AC2\"\nFROM \"abnormal_data_gmm\"\nWHERE \"prediction\" = 0\nGROUP BY time(10h)\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Normal Zone 2",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n       MEAN(\"z2_AC1(kW)\") AS \"Zone 2 AC1\"\nFROM \"abnormal_data_gmm\"\nWHERE \"prediction\" = 0\nGROUP BY time(10h)\n",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Normal Zone 4",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n       MEAN(\"z4_AC1(kW)\") AS \"Zone 4 AC1\"\n       FROM \"abnormal_data_gmm\"\nWHERE \"prediction\" = 0\nGROUP BY time(10h)\n",
+          "rawQuery": true,
+          "refId": "G",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Normal Zone 5",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n       MEAN(\"z5_AC1(kW)\") AS \"Zone 5 AC1\"\nFROM \"abnormal_data_gmm\"\nWHERE \"prediction\" = 0\nGROUP BY time(10h)\n",
+          "rawQuery": true,
+          "refId": "H",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "AC Feature Contribution to Abnormals",
+      "type": "barchart"
+    },
+    {
+      "cards": {},
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateBlues",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "timeseries",
+      "description": " a heatmap that shows energy consumption patterns across all zones for different features (AC, Plug, Light) over time.",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "heatmap": {},
+      "hideZeroBuckets": false,
+      "highlightCards": true,
+      "id": 2,
+      "legend": {
+        "show": false
+      },
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "alias": "Zone 1",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "query": "SELECT MEAN(\"z1_AC2(kW)\") AS \"Zone 1 AC2\", \n       MEAN(\"z1_AC3(kW)\") AS \"Zone 1 AC3\", \n       MEAN(\"z1_Plug(kW)\") AS \"Zone 1 Plug\", \n       MEAN(\"z1_S1(lux)\") AS \"Zone 1 Light\"\nFROM \"abnormal_data_gmm\" \nGROUP BY time(1h) \nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 2 ",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z2_AC1(kW)\") AS \"Zone 2 AC1\", \n       MEAN(\"z2_Light(kW)\") AS \"Zone 2 Light\", \n       MEAN(\"z2_Plug(kW)\") AS \"Zone 2 Plug\", \n       MEAN(\"z2_S1(lux)\") AS \"Zone 2 S1\"\nFROM \"abnormal_data_gmm\" \nGROUP BY time(1h) \nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 3 ",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z3_Plug(kW)\") AS \"Zone 3  Plug\", \n       MEAN(\"z3_Light(kW)\") AS \"Zone 3 Light\"\nFROM \"abnormal_data_gmm\" \nGROUP BY time(1h) \nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 4",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z4_AC1(kW)\") AS \"Zone 4 AC1\", \n       MEAN(\"z4_Light(kW)\") AS \"Zone 4 Light\", \n       MEAN(\"z4_Plug(kW)\") AS \"Zone 4 Plug\", \n       MEAN(\"z4_S1(lux)\") AS \"Zone 1 Light\"\nFROM \"anomaly_data\" \nGROUP BY time(1h) \nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 5",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT MEAN(\"z5_AC1(kW)\") AS \"Zone 5 AC1\", \n       MEAN(\"z5_Light(kW)\") AS \"Zone 5 Light\", \n       MEAN(\"z5_Plug(kW)\") AS \"Zone 5 Plug\", \n       MEAN(\"z5_S1(RH%)\") AS \"Zone 5 Light\"\nFROM \"abnormal_data_gmm\" \nGROUP BY time(1h) \nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Zone-wise Energy Consumption Patterns",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "yAxis": {
+        "format": "short",
+        "logBase": 1,
+        "show": true
+      },
+      "yBucketBound": "auto"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 35,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Zone-Specific Analysis",
+  "uid": "MbsLpgnHk",
+  "version": 12,
+  "weekStart": ""
+}

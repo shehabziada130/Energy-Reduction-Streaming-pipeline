@@ -1,0 +1,48 @@
+Lux Level vs. Light Energy Consumption:Guage
+
+	SELECT MEAN("z1_Plug(kW)") AS "Zone 1 Plug Consumption",
+	       MEAN("z1_S1(lux)") AS "Zone 1 Lux Level"
+	FROM "anomaly_data"
+	GROUP BY time(1h)
+	FILL(null)
+
+
+
+	SELECT MEAN("z4_Light(kW)") AS "Zone 4 Light Consumption",
+	       MEAN("z4_S1(lux)") AS "Zone 4 Lux Level"
+	FROM "anomaly_data"
+	GROUP BY time(1h)
+	FILL(null)
+
+
+Energy Consumption vs. Humidity (RH%):Bar guage LCD
+
+	SELECT MEAN("z1_AC2(kW)") AS "Zone 1 AC2 Consumption",
+	       MEAN("z1_S1(RH%)") AS "Zone 1 Humidity (RH%)"
+	FROM "anomaly_data"
+	GROUP BY time(1h)
+	FILL(null)
+
+
+	SELECT MEAN("z2_AC1(kW)") AS "Zone 2 AC1 Consumption",
+	       MEAN("z2_S1(RH%)") AS "Zone 2 Humidity (RH%)"
+	FROM "anomaly_data"
+	GROUP BY time(1h)
+	FILL(null)
+
+
+	SELECT MEAN("z4_AC1(kW)") AS "Zone 4 AC1 Consumption",
+	       MEAN("z4_S1(RH%)") AS "Zone 4 Humidity (RH%)"
+	FROM "anomaly_data"
+	GROUP BY time(1h)
+	FILL(null)
+
+
+	SELECT MEAN("z5_AC1(kW)") AS "Zone 5 AC1 Consumption",
+	       MEAN("z5_S1(RH%)") AS "Zone 5 Humidity (RH%)"
+	FROM "anomaly_data"
+	GROUP BY time(1h)
+	FILL(null)
+
+
+

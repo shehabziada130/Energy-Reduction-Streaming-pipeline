@@ -1,0 +1,65 @@
+Feature Contribution to Anomalies:Bar chart 
+	SELECT MEAN("z1_AC2(kW)") AS "Zone 1 AC2",
+	       MEAN("z2_AC1(kW)") AS "Zone 2 AC1", 
+	       MEAN("z3_Light(kW)") AS "Zone 3 Light", 
+	       MEAN("z4_AC1(kW)") AS "Zone 4 AC1", 
+	       MEAN("z5_AC1(kW)") AS "Zone 5 AC1"
+	FROM "anomaly_data"
+	WHERE "prediction" = 1
+	GROUP BY time(10h)
+
+
+	SELECT MEAN("z2_AC1(kW)") AS "Zone 2 AC1", 
+	       MEAN("z2_Light(kW)") AS "Zone 2 Light", 
+	       MEAN("z2_Plug(kW)") AS "Zone 2 Plug", 
+	       MEAN("z2_S1(lux)") AS "Zone 2 S1"
+	FROM "anomaly_data" 
+	GROUP BY time(1h) 
+	FILL(null)
+
+
+	SELECT MEAN("z3_Plug(kW)") AS "Zone 3  Plug", 
+	       MEAN("z3_Light(kW)") AS "Zone 3 Light"
+	FROM "anomaly_data" 
+	GROUP BY time(1h) 
+	FILL(null)
+
+
+	SELECT MEAN("z4_AC1(kW)") AS "Zone 4 AC1", 
+	       MEAN("z4_Light(kW)") AS "Zone 4 Light", 
+	       MEAN("z4_Plug(kW)") AS "Zone 4 Plug", 
+	       MEAN("z4_S1(lux)") AS "Zone 1 Light"
+	FROM "anomaly_data" 
+	GROUP BY time(1h) 
+	FILL(null)
+
+
+	SELECT MEAN("z5_AC1(kW)") AS "Zone 5 AC1", 
+	       MEAN("z5_Light(kW)") AS "Zone 5 Light", 
+	       MEAN("z5_Plug(kW)") AS "Zone 5 Plug", 
+	       MEAN("z5_S1(RH%)") AS "Zone 5 Light"
+	FROM "anomaly_data" 
+	GROUP BY time(1h) 
+	FILL(null)
+
+
+Zone-wise Energy Consumption Patterns:Heatmap
+
+	SELECT MEAN("z1_AC2(kW)") AS "Zone 1 AC2", 
+	       MEAN("z1_AC3(kW)") AS "Zone 1 AC3", 
+	       MEAN("z1_Plug(kW)") AS "Zone 1 Plug", 
+	       MEAN("z1_S1(lux)") AS "Zone 1 Light"
+	FROM "anomaly_data" 
+	GROUP BY time(1h) 
+	FILL(null)
+
+
+	SELECT MEAN("z1_AC2(kW)") AS "Zone 1 AC2",
+	       MEAN("z2_AC1(kW)") AS "Zone 2 AC1", 
+	       MEAN("z3_Light(kW)") AS "Zone 3 Light", 
+	       MEAN("z4_AC1(kW)") AS "Zone 4 AC1", 
+	       MEAN("z5_AC1(kW)") AS "Zone 5 AC1"
+	FROM "anomaly_data"
+	WHERE "prediction" = 0
+	GROUP BY time(10h)
+

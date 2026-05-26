@@ -1,0 +1,51 @@
+Total Energy Consumption by Zone: Bar guage basic 
+
+	SELECT SUM("z1_AC2(kW)") + SUM("z1_Plug(kW)") + SUM("z1_AC3(kW)") AS "Zone 1 Total Consumption"
+	FROM "anomaly_data"
+	WHERE time > now() - 30d
+	GROUP BY time(1h)
+	FILL(null)
+
+
+
+	SELECT SUM("z2_AC1(kW)") + SUM("z2_Plug(kW)") + SUM("z2_Light(kW)") AS "Zone 2 Total Consumption"
+	FROM "anomaly_data"
+	WHERE time > now() - 30d
+	GROUP BY time(1h)
+	FILL(null)
+
+
+	SELECT SUM("z3_Light(kW)") + SUM("z3_Plug(kW)") AS "Zone 3 Total Consumption"
+	FROM "anomaly_data"
+	WHERE time > now() - 30d
+	GROUP BY time(1h)
+	FILL(null)
+
+
+	SELECT SUM("z4_AC1(kW)") + SUM("z4_Plug(kW)") + SUM("z4_Light(kW)") AS "Zone 4 Total Consumption"
+	FROM "anomaly_data"
+	WHERE time > now() - 30d
+	GROUP BY time(1h)
+	FILL(null)
+
+
+
+	SELECT SUM("z5_AC1(kW)") + SUM("z5_Plug(kW)") + SUM("z5_Light(kW)") AS "Zone 5 Total Consumption"
+	FROM "anomaly_data"
+	WHERE time > now() - 30d
+	GROUP BY time(1h)
+	FILL(null)
+
+
+Consumption Comparison (Normal vs. Anomalous):pie chart donut
+
+
+	SELECT "z1_AC2(kW)" AS "Zone 1 AC2", "z1_Plug(kW)" AS "Zone 1 Plug", "z1_Light(kW)" AS "Zone 1 Light",
+	       "z2_AC1(kW)" AS "Zone 2 AC1", "z2_Plug(kW)" AS "Zone 2 Plug", "z2_Light(kW)" AS "Zone 2 Light",
+	       "z3_Light(kW)" AS "Zone 3 Light", "z3_Plug(kW)" AS "Zone 3 Plug",
+	       "z4_AC1(kW)" AS "Zone 4 AC1", "z4_Plug(kW)" AS "Zone 4 Plug", "z4_Light(kW)" AS "Zone 4 Light",
+	       "z5_AC1(kW)" AS "Zone 5 AC1", "z5_Plug(kW)" AS "Zone 5 Plug", "z5_Light(kW)" AS "Zone 5 Light",
+	       "prediction"
+	FROM "anomaly_data"
+	WHERE time > now() - 30d
+

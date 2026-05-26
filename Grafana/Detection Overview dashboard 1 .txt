@@ -1,0 +1,32 @@
+Anomaly by Zone:pie chart 
+	SELECT SUM("prediction") FROM "anomaly_data" 
+	WHERE ("z1_AC2(kW)" > 0 OR "z1_AC3(kW)" > 0 OR "z1_Plug(kW)" > 0) 
+	GROUP BY "zone"
+
+
+	SELECT SUM("prediction") FROM "anomaly_data" 
+	WHERE ("z2_AC1(kW)" > 0 OR "z2_Light(kW)" > 0 OR "z2_Plug(kW)" > 0) 
+	GROUP BY "zone"
+
+
+	SELECT SUM("prediction") FROM "anomaly_data" 
+	WHERE ("z3_Light(kW)" > 0 OR "z3_Plug(kW)" > 0) 
+	GROUP BY "zone"
+
+
+
+	SELECT SUM("prediction") FROM "anomaly_data" 
+	WHERE ("z4_AC1(kW)" > 0 OR "z4_Light(kW)" > 0 OR "z4_Plug(kW)" > 0) 
+	GROUP BY "zone"
+
+
+
+	SELECT SUM("prediction") FROM "anomaly_data" 
+	WHERE ("z5_AC1(kW)" > 0 OR "z5_Light(kW)" > 0 OR "z5_Plug(kW)" > 0) 
+	GROUP BY "zone"
+
+
+Anomaly Occurrence:Line chart with gradient colors
+
+	SELECT count("prediction") FROM "anomaly_data" WHERE "prediction" = 1
+	AND $timeFilter GROUP BY time(10m) fill(0)

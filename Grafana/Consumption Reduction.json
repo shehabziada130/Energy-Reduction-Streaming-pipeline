@@ -1,0 +1,406 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 4,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "description": "chart showing the cumulative energy consumption for all zones over time.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "displayMode": "basic",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "8.4.3",
+      "targets": [
+        {
+          "alias": "Zone 1",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "query": "SELECT SUM(\"z1_AC2(kW)\") + SUM(\"z1_Plug(kW)\") + SUM(\"z1_AC3(kW)\") AS \"Zone 1 Total Consumption\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 2 ",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT SUM(\"z2_AC1(kW)\") + SUM(\"z2_Plug(kW)\") + SUM(\"z2_Light(kW)\") AS \"Zone 2 Total Consumption\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 3 ",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT SUM(\"z3_Light(kW)\") + SUM(\"z3_Plug(kW)\") AS \"Zone 3 Total Consumption\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 4 ",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT SUM(\"z4_AC1(kW)\") + SUM(\"z4_Plug(kW)\") + SUM(\"z4_Light(kW)\") AS \"Zone 4 Total Consumption\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 5",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT SUM(\"z5_AC1(kW)\") + SUM(\"z5_Plug(kW)\") + SUM(\"z5_Light(kW)\") AS \"Zone 5 Total Consumption\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\nGROUP BY time(1h)\nFILL(null)\n",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Total Energy Consumption by Zone",
+      "type": "bargauge"
+    },
+    {
+      "description": "a  plot to compare energy consumption for abnormals vs. normal data for key features like AC, Plug, and Light.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 2,
+      "options": {
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "values": []
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.4.3",
+      "targets": [
+        {
+          "alias": "Zone 1 AC2",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \"z1_AC2(kW)\" AS \"Zone 1 AC2\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 1 Plug",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n \"z1_Plug(kW)\" AS \"Zone 1 Plug\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 1 Light",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n\"z1_Light(kW)\" AS \"Zone 1 Light\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 2 AC1",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT\n       \"z2_AC1(kW)\" AS \"Zone 2 AC1\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 2 Plug",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT  \"z2_Plug(kW)\" AS \"Zone 2 Plug\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 2 Light",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT \n \"z2_Light(kW)\" AS \"Zone 2 Light\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 3 Light",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT\n       \"z3_Light(kW)\" AS \"Zone 3 Light\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "G",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 3 Plug",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT\n\"z3_Plug(kW)\" AS \"Zone 3 Plug\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "H",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 4 AC1",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT\n       \"z4_AC1(kW)\" AS \"Zone 4 AC1\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "I",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 4 Plug",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT\n \"z4_Plug(kW)\" AS \"Zone 4 Plug\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "J",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 4 Light",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT\n\"z4_Light(kW)\" AS \"Zone 4 Light\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "K",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 5 AC1",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT\n       \"z5_AC1(kW)\" AS \"Zone 5 AC1\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "L",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Zone 5 Plug",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT\n\"z5_Plug(kW)\" AS \"Zone 5 Plug\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "M",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Zone 5 Light",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "s8SM7g7Hk"
+          },
+          "hide": false,
+          "query": "SELECT\n\"z5_Light(kW)\" AS \"Zone 5 Light\"\nFROM \"abnormal_data_xgb\"\nWHERE time > now() - 30d\n",
+          "rawQuery": true,
+          "refId": "N",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Consumption Comparison",
+      "type": "piechart"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 35,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2024-11-16T15:14:05.555Z",
+    "to": "2024-11-16T15:28:09.407Z"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Consumption Reduction Opportunities",
+  "uid": "mkh_Ag7Nz",
+  "version": 8,
+  "weekStart": ""
+}
