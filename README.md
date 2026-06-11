@@ -164,8 +164,3 @@ An industrial facility runs dozens of machines, each publishing energy readings 
 - Swap InfluxDB 1.8 for InfluxDB 2.x and migrate dashboards to Flux queries
 - Add Kafka lag monitoring to the Grafana dashboard alongside the anomaly panels
 
----
-
-## License
-
-MIT
